@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "contact-sync"
+version = "0.1.0"
+description = "Resumable, idempotent one-way sync between a paginated REST API and a local sink."
+readme = "README.md"
+requires-python = ">=3.10"
+# Deliberately empty. The pipeline, the demo API and the test suite all run
+# on a stock Python interpreter, so there is nothing to install and nothing
+# to pin.
+dependencies = []
+
+[project.scripts]
+contact-sync = "contact_sync.cli:main"
+
+[tool.setuptools]
+packages = ["contact_sync"]
+
+[tool.pytest.ini_options]
+# The suite is written with stdlib unittest; pytest can run it too.
+testpaths = ["tests"]

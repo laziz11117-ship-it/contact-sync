@@ -1,0 +1,50 @@
+{
+  "_about": "Copy to config.json and edit. Any key starting with _ is ignored, so use them for comments. config.json is git-ignored.",
+  "_secrets": "No credentials live in this file. source.auth_env_var NAMES an environment variable; the value is read at request time and never logged or written to a run report.",
+
+  "source": {
+    "_base_url": "Any REST endpoint returning a JSON array under records_path, paged by offset/limit. The default points at the bundled demo API.",
+    "base_url": "http://127.0.0.1:8731/users",
+    "records_path": "users",
+    "total_path": "total",
+    "limit_param": "limit",
+    "offset_param": "skip",
+    "page_size": 25,
+    "_max_pages": "0 means no limit; set it to smoke-test against a large source.",
+    "max_pages": 0,
+    "timeout_seconds": 10.0,
+    "auth_env_var": "CONTACT_SYNC_SOURCE_TOKEN",
+
+    "retry": {
+      "_max_attempts": "Counts the first attempt: 4 means 1 try plus 3 retries.",
+      "max_attempts": 4,
+      "initial_backoff_seconds": 0.5,
+      "max_backoff_seconds": 8.0,
+      "multiplier": 2.0,
+      "_jitter": "Randomises each delay by +/- this fraction.",
+      "jitter": 0.2
+    }
+  },
+
+  "_mapping": "Dotted paths from a source record to the canonical contact fields. Use full_name, or first_name plus last_name.",
+  "mapping": {
+    "external_id": "id",
+    "email": "email",
+    "first_name": "firstName",
+    "last_name": "lastName",
+    "phone": "phone",
+    "company": "company.name",
+    "_updated_at": "Optional. When present it picks the winner among duplicates; when absent, first seen wins.",
+    "updated_at": "updatedAt"
+  },
+
+  "sink": {
+    "kind": "sqlite",
+    "path": "data/contacts.sqlite3"
+  },
+
+  "run": {
+    "state_path": "data/state.json",
+    "report_path": "data/last-run.json"
+  }
+}

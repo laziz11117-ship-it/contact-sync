@@ -1,0 +1,21 @@
+# bytecode and tooling caches
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+# runtime artifacts: local database, resume checkpoint, run reports
+data/
+*.sqlite3
+*.sqlite3-journal
+*.db
+*.json.tmp
+# the operator's real config and credentials
+config.json
+.env
+.env.*
+!.env.example
